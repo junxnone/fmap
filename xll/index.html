@@ -39,9 +39,9 @@
 	addMapControl();
   
 	var img_go = new Image();
-        img_go.src = 'img/xzrs.png';
+        img_go.src = '../img/xzrs.png';
 	
-	$.get('data/xll.geojson', function(geojson) {
+	$.get('../data/xll.geojson', function(geojson) {
 	
 		var geojsonDataSet = mapv.geojson.getDataSet(geojson);
 		console.log(geojsonDataSet);
