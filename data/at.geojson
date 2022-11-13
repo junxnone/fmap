@@ -6,6 +6,6 @@
 { "type": "Feature", "properties": { "addr": "上海市奉贤区 庄行 大名城·映雨江南营销中心" }, "geometry": { "type": "Point", "coordinates": [ 121.404030179891677, 30.907324152426437 ] } },
 { "type": "Feature", "properties": { "addr": "上海松江泗泾 中国铁建 花语天境" }, "geometry": { "type": "Point", "coordinates": [ 121.25488,31.133354 ] } },
 { "type": "Feature", "properties": { "addr": "上海松江 金地 丰盛道" }, "geometry": { "type": "Point", "coordinates": [ 121.263418777737044, 31.066532802109332 ] } },
-{ "type": "Feature", "properties": { "addr": "上海松江 首创禧瑞云庭营销中心" }, "geometry": { "type": "Point", "coordinates": [ 121.225261993573014, 31.072604773098913 ] } }
+{ "type": "Feature", "properties": { "addr": "上海松江 首创禧瑞云庭营销中心" }, "geometry": { "type": "Point", "coordinates": [ 121.223787,31.067741 ] } }
 ]
 }
