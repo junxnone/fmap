@@ -3,6 +3,9 @@
 "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
 "features": [
 { "type": "Feature", "properties": { "addr": "上海松江车墩 金地新乐里" }, "geometry": { "type": "Point", "coordinates": [ 121.322709276989912, 31.023595162780609 ] } },
-{ "type": "Feature", "properties": { "addr": "上海市奉贤区 庄行 大名城·映雨江南营销中心" }, "geometry": { "type": "Point", "coordinates": [ 121.404030179891677, 30.907324152426437 ] } }
+{ "type": "Feature", "properties": { "addr": "上海市奉贤区 庄行 大名城·映雨江南营销中心" }, "geometry": { "type": "Point", "coordinates": [ 121.404030179891677, 30.907324152426437 ] } },
+{ "type": "Feature", "properties": { "addr": "上海松江泗泾 中国铁建 花语天境" }, "geometry": { "type": "Point", "coordinates": [ 121.277755464184651, 31.124020950676233 ] } },
+{ "type": "Feature", "properties": { "addr": "上海松江 金地 丰盛道" }, "geometry": { "type": "Point", "coordinates": [ 121.263418777737044, 31.066532802109332 ] } },
+{ "type": "Feature", "properties": { "addr": "上海松江 首创禧瑞云庭营销中心" }, "geometry": { "type": "Point", "coordinates": [ 121.225261993573014, 31.072604773098913 ] } }
 ]
 }
