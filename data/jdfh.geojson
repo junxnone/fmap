@@ -1,0 +1,7 @@
+{
+"type": "FeatureCollection",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "addr": "上海青浦 金地虹桥峯汇" }, "geometry": { "type": "Point", "coordinates": [ 121.299105042087533, 31.173380862413921 ] } }
+]
+}
