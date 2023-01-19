@@ -111,7 +111,22 @@
 		var data = [];
 		var darray = geojsonDataSet._data;		
 		add_text_point(darray);
-	});		
+	});
+	
+	var bd = new BMap.Boundary();    
+        function drawregion(region){
+            bd.get(region, function (rs) {
+                var hole = new BMap.Polygon(rs.boundaries, {
+                    fillColor: '',
+                    fillOpacity: 0.1,
+                    strokeStyle: 'dashed'
+                });
+                map.addOverlay(hole);
+            });
+        }
+        drawregion('奉贤区');
+
+
 </script>
 </body>
 </html>
