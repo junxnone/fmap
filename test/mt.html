@@ -91,7 +91,7 @@
 			markers[i].addEventListener("click",(function(k) {
                             return function() {
                                 //将被点击marker置为中心
-                                map.centerAndZoom(point[k], zoomlevel);
+                                map.centerAndZoom(points[k], zoomlevel);
                                 //在marker上打开检索信息窗口
                                 searchInfoWindow[k].open(marker[k]);
                             }
