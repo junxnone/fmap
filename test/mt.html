@@ -75,7 +75,7 @@
 				var searchInfoWindow = null;
 				var content = "info"
 				markers[i].addEventListener("click", function(){
-						 new BMapLib.SearchInfoWindow(map, content, {
+						this.openInfowindow( new BMapLib.SearchInfoWindow(map, content, {
 							title  : data[i].addr,      //标题
 							width  : 290,             //宽度
 							height : 105,              //高度
@@ -86,7 +86,7 @@
 								BMAPLIB_TAB_TO_HERE,  //到这里去
 								BMAPLIB_TAB_FROM_HERE //从这里出发
 							]
-						});
+						});)
 				});
 			})();
 		}		
