@@ -72,9 +72,7 @@
 			var marker = new BMap.Marker(ipoi); //创建marker对象
 		     	points.push(ipoi)
 			markers.push(marker);
-             		map.addOverlay(marker);
-		}
-		for(var i = 0; i < data.length;i++) {
+             		map.addOverlay(markers[i]);
 			var content = "info"
 			searchInfoWindow[i] = new BMapLib.SearchInfoWindow(map, content, {
 				title  : data[i].addr,      //标题
@@ -93,7 +91,7 @@
                                 //将被点击marker置为中心
                                 map.centerAndZoom(points[k], zoomlevel);
                                 //在marker上打开检索信息窗口
-                                searchInfoWindow[k].open(marker[k]);
+                                searchInfoWindow[k].open(markers[k]);
                             }
                         })(i));
 		}		
