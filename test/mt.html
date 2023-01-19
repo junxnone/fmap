@@ -68,49 +68,11 @@
 			]
 		});
     var marker = new BMap.Marker(poi); //创建marker对象
-    marker.enableDragging(); //marker可拖拽
     marker.addEventListener("click", function(e){
 	    searchInfoWindow.open(marker);
     })
     map.addOverlay(marker); //在地图中添加marker
-	//样式1
-	var searchInfoWindow1 = new BMapLib.SearchInfoWindow(map, "信息框1内容", {
-		title: "信息框1", //标题
-		panel : "panel", //检索结果面板
-		enableAutoPan : true, //自动平移
-		searchTypes :[
-			BMAPLIB_TAB_FROM_HERE, //从这里出发
-			BMAPLIB_TAB_SEARCH   //周边检索
-		]
-	});
-	function openInfoWindow1() {
-		searchInfoWindow1.open(new BMap.Point(116.319852,40.057031));
-	}
-	//样式2
-	var searchInfoWindow2 = new BMapLib.SearchInfoWindow(map, "信息框2内容", {
-		title: "信息框2", //标题
-		panel : "panel", //检索结果面板
-		enableAutoPan : true, //自动平移
-		searchTypes :[
-			BMAPLIB_TAB_SEARCH   //周边检索
-		]
-	});
-	function openInfoWindow2() {
-		searchInfoWindow2.open(new BMap.Point(116.324852,40.057031));
-	}
-	//样式3
-	var searchInfoWindow3 = new BMapLib.SearchInfoWindow(map, "信息框3内容", {
-		title: "信息框3", //标题
-		width: 290, //宽度
-		height: 40, //高度
-		panel : "panel", //检索结果面板
-		enableAutoPan : true, //自动平移
-		searchTypes :[
-		]
-	});
-	function openInfoWindow3() {
-		searchInfoWindow3.open(new BMap.Point(116.328852,40.057031)); 
-	}
+
 </script>
 </body>
 </html>
