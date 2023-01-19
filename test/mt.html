@@ -70,6 +70,14 @@
 		for(var i = 0; i < data.length;i++) {
 			var ipoi = new BMap.Point(data[i].geometry.coordinates[0], data[i].geometry.coordinates[1]);
 			var marker = new BMap.Marker(ipoi); //创建marker对象
+			var label = new BMap.Label(data[i].addr,{offset: new BMap.Size(25,5)});
+			var opts = {
+			  width: 200,
+			  title: data[i].addr,
+			  enableMessage: false
+			};
+			marker.setLabel(label);
+			
 		     	points.push(ipoi)
 			markers.push(marker);
              		map.addOverlay(markers[i]);
