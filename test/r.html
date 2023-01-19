@@ -1,122 +1,155 @@
 <!DOCTYPE html>
-<html>
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-	<style type="text/css">
-	body, html{width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
-	#allmap {height: 100%;width:100%;overflow: hidden;}
-	#result {width:100%;font-size:12px;}
-	dl,dt,dd,ul,li{
-		margin:0;
-		padding:0;
-		list-style:none;
-	}
-	dt{
-		font-size:14px;
-		font-family:"微软雅黑";
-		font-weight:bold;
-		border-bottom:1px dotted #000;
-		padding:5px 0 5px 5px;
-		margin:5px 0;
-	}
-	dd{
-		padding:5px 0 0 5px;
-	}
-	li{
-		line-height:28px;
-	}
-	</style>
-	<script type="text/javascript" src="//api.map.baidu.com/api?v=2.0&ak=TgV2QFgm0rUs6MM5ZujGFvVUiyQUWhjD"></script>
-	<script type="text/javascript" src="//api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.js"></script>
-	<script type="text/javascript" src="//apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
-	<script src="https://mapv.baidu.com/build/mapv.min.js"></script>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8" >
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge" >
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" >
+        <style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
 
-	<link rel="stylesheet" href="//api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.css" />
-	<title>带检索功能的信息窗口</title>
+        #map_container {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+        }
+        </style>
+        <script src="//api.map.baidu.com/api?v=1.0&type=webgl&ak=TgV2QFgm0rUs6MM5ZujGFvVUiyQUWhjD"></script>
+        <script src="//mapv.baidu.com/build/mapv.min.js"></script>
+        <script src="https://code.bdstatic.com/npm/mapvgl@1.0.0-beta.146/dist/mapvgl.min.js"></script>
+        <script type="text/javascript" src="//apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <title>SH 奉贤疫情场所</title>
+    <style>
+       body,html{
+           width: 100%;
+           height: 100%;
+           padding: 0;
+           margin: 0;
+       }
+       #container{
+           width: 100%;
+           height: 100%;
+           overflow: hidden;
+       }
+       #result{
+           position: fixed;
+           top: 10px;
+           right: 10px;
+           width: 50px;
+           height: 480px;
+           line-height: 30px;
+           text-align: center;
+           background: #fff;
+           box-shadow: 0 2px 6px 0 rgba(27, 142, 236, 0.5);
+           border-radius: 7px;
+           z-index: 99;
+       }
+      #result>div:first-child{
+            width: 100%;
+            height: 40px;
+            text-align: center;
+            line-height: 40px;
+            background: #00BFFF;
+            border-radius: 7px 7px 0px 0px;
+            color: #fff;
+      }
+      #result ul{
+           list-style-type: none;
+           margin: 0;
+           padding: 0;
+      }
+      #result ul li{
+           color: #000;
+           padding: 7px;
+           font-size: 14px;
+           text-align: justify;
+           border-bottom: 1px solid #D3D3D3  
+      }
+      #result>div:last-child{
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          padding: 0px;
+      }
+      .btn{ 
+          width: 50px;
+          height: 35px;
+          color: #fff;
+          font-size: 14px;;
+          border-radius: 5px;
+          background: #00BFFF;
+          box-shadow: none;
+      }
+      .btn:hover{
+          cursor: pointer;
+      }
+    </style>
 </head>
-<body>
-	<div id="allmap">	
-	</div>
-<script type="text/javascript">
-	var map = new BMap.Map('allmap');
-	var poi = new BMap.Point(121.422,30.993);
-	var zoomlevel = 12
-	map.centerAndZoom(poi, zoomlevel);
-	function setMapEvent(){
-		map.enableScrollWheelZoom();
-		map.enableKeyboard();
-		map.enableDragging();
-		map.enableDoubleClickZoom()
-	}
-	function addMapControl(){
-		var scaleControl = new BMap.ScaleControl({anchor:BMAP_ANCHOR_BOTTOM_LEFT});
-		scaleControl.setUnit(BMAP_UNIT_IMPERIAL);
-		map.addControl(scaleControl);
-		var navControl = new BMap.NavigationControl({anchor:BMAP_ANCHOR_TOP_LEFT,type:BMAP_NAVIGATION_CONTROL_LARGE});
-		map.addControl(navControl);
-		var overviewControl = new BMap.OverviewMapControl({anchor:BMAP_ANCHOR_BOTTOM_RIGHT,isOpen:true});
-		map.addControl(overviewControl);
-	}
-	setMapEvent();
-	addMapControl();
+    </head>
 
+    <body>
+        <div id="map_container"></div>
+        <div id='result'>
+        <div>每日</div>
+        <div><button onclick='show_mark_only("0408")' class='btn'>4.8</button></div>
+        <div><button onclick='show_mark_only("0407")' class='btn'>4.7</button></div>
+        <div><button onclick='show_mark_only("0406")' class='btn'>4.6</button></div>
+        <div><button onclick='show_mark_only("0405")' class='btn'>4.5</button></div>
+        <div><button onclick='show_mark_only("0404")' class='btn'>4.4</button></div>
+        <div><button onclick='show_mark_only("0403")' class='btn'>4.3</button></div>
+        <div><button onclick='show_mark_only("0402")' class='btn'>4.2</button></div>
+        <div><button onclick='show_mark_only("0401")' class='btn'>4.1</button></div>
+        <div><button onclick='show_mark_only("0331")' class='btn'>3.31</button></div>
+        <div><button onclick='show_mark_only("0330")' class='btn'>3.30</button></div>
+        <div><button onclick='show_mark_only("0329")' class='btn'>3.29</button></div>
+        <div><button onclick='show_mark_only("0328")' class='btn'>3.28</button></div>
+        <div><button onclick='show_all()' class='btn'>3.28~</button></div>
 
-	function add_text_point(data){
-		var points = []
-		var markers = []
-		var searchInfoWindow = []
+        </div>
+        <script>
+        /* global BMapGL */
 
-		for(var i = 0; i < data.length;i++) {
-			var ipoi = new BMap.Point(data[i].geometry.coordinates[0], data[i].geometry.coordinates[1]);
-			var marker = new BMap.Marker(ipoi); //创建marker对象
-			var label = new BMap.Label(data[i].addr,{offset: new BMap.Size(25,5)});
-			var opts = {
-			  width: 200,
-			  title: data[i].addr,
-			  enableMessage: false
-			};
-			marker.setLabel(label);
-			
-		     	points.push(ipoi)
-			markers.push(marker);
-             		map.addOverlay(markers[i]);
-			var content = "info"
-			searchInfoWindow[i] = new BMapLib.SearchInfoWindow(map, content, {
-				title  : data[i].addr,      //标题
-				width  : 290,             //宽度
-				height : 105,              //高度
-				panel  : "panel",         //检索结果面板
-				enableAutoPan : true,     //自动平移
-				searchTypes   :[
-					BMAPLIB_TAB_SEARCH,   //周边检索
-					BMAPLIB_TAB_TO_HERE,  //到这里去
-					BMAPLIB_TAB_FROM_HERE //从这里出发
-				]
-			});
-			markers[i].addEventListener("click",(function(k) {
-                            return function() {
-                                //将被点击marker置为中心
-                                map.centerAndZoom(points[k], zoomlevel);
-                                //在marker上打开检索信息窗口
-                                searchInfoWindow[k].open(markers[k]);
-                            }
-                        })(i));
-		}		
-	}
-	$.get('../data/at.geojson', function(geojson) {
-	
-		var geojsonDataSet = mapv.geojson.getDataSet(geojson);
-		console.log(geojsonDataSet);
-		var data = [];
-		var darray = geojsonDataSet._data;		
-		add_text_point(darray);
-	});
-	
-	var bd = new BMap.Boundary();    
+        /* global mapv */
+
+        /* global mapvgl */
+
+        /* global initMap */
+
+        /* global whiteStyle */
+
+        var map = initMap({
+            tilt: 10,
+            center: [121.422,30.993],
+            zoom: 12,
+        });
+        function initMap(options) {
+            options = Object.assign({
+                tilt: 60,
+                heading: 0
+            }, options);
+            var map = new BMapGL.Map('map_container');
+            map.enableKeyboard();
+            map.enableScrollWheelZoom();
+            map.enableInertialDragging();
+            map.enableContinuousZoom();
+
+            if (options.center && options.zoom) {
+                map.centerAndZoom(new BMapGL.Point(options.center[0], options.center[1]), options.zoom);
+            }
+
+            map.setTilt(options.tilt);
+            map.setHeading(options.heading);
+            return map;
+        }
+        var bd = new BMapGL.Boundary();    
         function drawregion(region){
             bd.get(region, function (rs) {
-                var hole = new BMap.Polygon(rs.boundaries, {
+                var hole = new BMapGL.Polygon(rs.boundaries, {
                     fillColor: '',
                     fillOpacity: 0.1,
                     strokeStyle: 'dashed'
@@ -125,8 +158,15 @@
             });
         }
         drawregion('奉贤区');
+            
+        var view = new mapvgl.View({
+            map: map
+        });
 
-
-</script>
-</body>
+        window.run = function () {}
+        setTimeout(function () {
+            run();
+        }, 1500);
+        </script>
+    </body>
 </html>
