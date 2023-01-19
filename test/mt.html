@@ -64,6 +64,8 @@
 
 	function add_text_point(data){
 		var markers = []
+		var searchInfoWindow = []
+
 		for(var i = 0; i < data.length;i++) {
 			var ipoi = new BMap.Point(data[i].geometry.coordinates[0], data[i].geometry.coordinates[1]);
 			var marker = new BMap.Marker(ipoi); //创建marker对象
@@ -71,7 +73,6 @@
              		map.addOverlay(marker);
 		}
 		for(var i = 0; i < data.length;i++) {
-			var searchInfoWindow = new Array()
 			var content = "info"
 			searchInfoWindow[i] = new BMapLib.SearchInfoWindow(map, content, {
 				title  : data[i].addr,      //标题
