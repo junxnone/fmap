@@ -39,8 +39,8 @@
 	<div id="allmap">	
 	</div>
 <script type="text/javascript">
-	var map = new BMapGL.Map('allmap');
-	var poi = new BMapGL.Point(121.422,30.993);
+	var map = new BMap.Map('allmap');
+	var poi = new BMap.Point(121.422,30.993);
 	var zoomlevel = 12
 	map.centerAndZoom(poi, zoomlevel);
 	function setMapEvent(){
@@ -50,13 +50,13 @@
 		map.enableDoubleClickZoom()
 	}
 	function addMapControl(){
-		var scaleControl = new BMapGL.ScaleControl({anchor:BMAP_ANCHOR_BOTTOM_LEFT});
+		var scaleControl = new BMap.ScaleControl({anchor:BMAP_ANCHOR_BOTTOM_LEFT});
 		scaleControl.setUnit(BMAP_UNIT_IMPERIAL);
 		map.addControl(scaleControl);
-		var navControl = new BMapGL.NavigationControl({anchor:BMAP_ANCHOR_TOP_LEFT,type:BMAP_NAVIGATION_CONTROL_LARGE});
+		var navControl = new BMap.NavigationControl({anchor:BMAP_ANCHOR_TOP_LEFT,type:BMAP_NAVIGATION_CONTROL_LARGE});
 		map.addControl(navControl);
-		//var overviewControl = new BMapGL.OverviewMapControl({anchor:BMAP_ANCHOR_BOTTOM_RIGHT,isOpen:true});
-		//map.addControl(overviewControl);
+		var overviewControl = new BMap.OverviewMapControl({anchor:BMAP_ANCHOR_BOTTOM_RIGHT,isOpen:true});
+		map.addControl(overviewControl);
 	}
 	setMapEvent();
 	addMapControl();
@@ -68,8 +68,8 @@
 		var searchInfoWindow = []
 
 		for(var i = 0; i < data.length;i++) {
-			var ipoi = new BMapGL.Point(data[i].geometry.coordinates[0], data[i].geometry.coordinates[1]);
-			var marker = new BMapGL.Marker(ipoi); //创建marker对象
+			var ipoi = new BMap.Point(data[i].geometry.coordinates[0], data[i].geometry.coordinates[1]);
+			var marker = new BMap.Marker(ipoi); //创建marker对象
 		     	points.push(ipoi)
 			markers.push(marker);
              		map.addOverlay(markers[i]);
