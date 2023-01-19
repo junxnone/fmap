@@ -63,13 +63,19 @@
 
 
 	function add_text_point(data){
-		var data_len = data.length
-		while(data_len--){
-			function addtp(){
+		var markers = []
+		for(var i = 0; i < data.length;i++) {
+			var ipoi = new BMap.Point(data[i].geometry.coordinates[0], data[i].geometry.coordinates[1]);
+			var marker = new BMap.Marker(ipoi); //创建marker对象
+		     	markers.push(marker);
+             		map.addOverlay(marker);
+		}
+		for(var i = 0; i < data.length;i++) {
+			(function(){
 				var searchInfoWindow = null;
 				var content = "info"
 				searchInfoWindow = new BMapLib.SearchInfoWindow(map, content, {
-						title  : data[data_len].addr,      //标题
+						title  : data[i].addr,      //标题
 						width  : 290,             //宽度
 						height : 105,              //高度
 						panel  : "panel",         //检索结果面板
@@ -80,14 +86,11 @@
 							BMAPLIB_TAB_FROM_HERE //从这里出发
 						]
 					});
-				var ipoi = new BMap.Point(data[data_len].geometry.coordinates[0], data[data_len].geometry.coordinates[1]);
-				var marker = new BMap.Marker(ipoi); //创建marker对象
-				marker.addEventListener("click", function(e){
+				marker[i].addEventListener("click", function(e){
 				    searchInfoWindow.open(marker);
 				})
-				map.addOverlay(marker); //在地图中添加marker
-			}
-		}
+			})();
+		}		
 	}
 	$.get('../data/at.geojson', function(geojson) {
 	
