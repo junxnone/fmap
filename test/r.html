@@ -119,8 +119,8 @@
             map.setHeading(options.heading);
             return map;
         }
-        var bd = new BMapGL.Boundary();    
         function drawregion(region){
+            var bd = new BMapGL.Boundary();
             bd.get(region, function (rs) {
                 var hole = new BMapGL.Polygon(rs.boundaries, {
                     fillColor: '',
