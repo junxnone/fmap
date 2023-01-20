@@ -191,13 +191,14 @@
                         })(i));
 			*/
 			
-			var opts = {
+		var opts = {
 		    width : 200,     // 信息窗口宽度
 		    height: 100,     // 信息窗口高度
 		    title : data[i].addr , // 信息窗口标题
 		    message:"info"
 		}
-		infoWindow[i] = new BMapGL.InfoWindow(data[i].addr, opts);  // 创建信息窗口对象 
+		var content = '<a href="http://c.biancheng.net" target="_blank">C语言中文网</a>'
+		infoWindow[i] = new BMapGL.InfoWindow(content, opts);  // 创建信息窗口对象 
 		markers[i].addEventListener("click",(function(k) {
                             return function() {
                                 //将被点击marker置为中心
