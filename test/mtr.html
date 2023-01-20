@@ -196,9 +196,14 @@
 		    message:"info"
 		}
 		infoWindow[i] = new BMapGL.InfoWindow(data[i].addr, opts);  // 创建信息窗口对象 
-		markers[i].addEventListener("click", function(){          
-			map.openInfoWindow(infoWindow[i], points[i]); //开启信息窗口
-			}); 
+		markers[i].addEventListener("click",(function(k) {
+                            return function() {
+                                //将被点击marker置为中心
+                                map.centerAndZoom(points[k], zoomlevel);
+                                //在marker上打开检索信息窗口
+                                map.openInfoWindow(infoWindow[k], points[k]);
+                            }
+                        })(i));
 		}		
 	}
 	$.get('../data/at.geojson', function(geojson) {
