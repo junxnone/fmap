@@ -150,7 +150,7 @@
 		var points = []
 		var markers = []
 		var searchInfoWindow = []
-
+		var infoWindow = []
 		for(var i = 0; i < data.length;i++) {
 			var ipoi = new BMapGL.Point(data[i].geometry.coordinates[0], data[i].geometry.coordinates[1]);
 			var marker = new BMapGL.Marker(ipoi, {icon: myIcon}); //创建marker对象
@@ -188,6 +188,16 @@
                             }
                         })(i));
 			*/
+			
+			var opts = {
+		    width : 200,     // 信息窗口宽度
+		    height: 100,     // 信息窗口高度
+		    title : data[i].addr , // 信息窗口标题
+		    message:"info"
+		}
+		infoWindow[i] = new BMapGL.InfoWindow(data[i].addr, opts);  // 创建信息窗口对象 
+		markers[i].addEventListener("click", function(){          
+			map.openInfoWindow(infoWindow[i], points[i]); //开启信息窗口
 		}		
 	}
 	$.get('../data/at.geojson', function(geojson) {
