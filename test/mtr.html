@@ -98,10 +98,12 @@
     <body>
         <div id="map_container"></div>
         <script>
+	var zoomlevel = 12
+
         var map = initMap({
             tilt: 10,
             center: [121.422,30.993],
-            zoom: 12,
+            zoom: zoomlevel,
         });
         function initMap(options) {
             options = Object.assign({
