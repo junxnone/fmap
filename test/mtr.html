@@ -198,6 +198,7 @@
 		infoWindow[i] = new BMapGL.InfoWindow(data[i].addr, opts);  // 创建信息窗口对象 
 		markers[i].addEventListener("click", function(){          
 			map.openInfoWindow(infoWindow[i], points[i]); //开启信息窗口
+			}); 
 		}		
 	}
 	$.get('../data/at.geojson', function(geojson) {
