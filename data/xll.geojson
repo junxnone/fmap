@@ -2,6 +2,6 @@
 "type": "FeatureCollection",
 "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
 "features": [
-{ "type": "Feature", "properties": { "addr": "上海松江车墩 金地新乐里" }, "geometry": { "type": "Point", "coordinates": [ 121.322709276989912, 31.023595162780609 ] } }
+{ "type": "Feature", "properties": { "addr": "松江 车墩 金地 新乐里 ", "price": "3.6W+", "visit": "1", "wiki": "https://junxnone.github.io/F/#/0021_%E4%B8%80%E6%89%8B%E6%88%BF_%E6%9D%BE%E6%B1%9F%E8%BD%A6%E5%A2%A9_%E9%87%91%E5%9C%B0%E6%96%B0%E4%B9%90%E9%87%8C" }, "geometry": { "type": "Point", "coordinates": [ 121.322709, 31.023595 ] } }
 ]
 }
