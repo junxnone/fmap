@@ -165,6 +165,7 @@
 			markers.push(marker);
              		map.addOverlay(markers[i]);
 			var content = "info"
+			/*
 			searchInfoWindow[i] = new BMapLib.SearchInfoWindow(map, content, {
 				title  : data[i].addr,      //标题
 				width  : 290,             //宽度
@@ -185,6 +186,7 @@
                                 searchInfoWindow[k].open(markers[k]);
                             }
                         })(i));
+			*/
 		}		
 	}
 	$.get('../data/at.geojson', function(geojson) {
