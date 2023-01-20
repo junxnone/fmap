@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: junxnone/issue2geojson@main
+      - uses: junxnone/issue2geojson@fmap
         with:
           branch: "main" # default to main
           dir: "data" # default to _posts
