@@ -108,14 +108,14 @@
                 tilt: 60,
                 heading: 0
             }, options);
-            var map = new BMapGL.Map('map_container');
+            var map = new BMap.Map('map_container');
             map.enableKeyboard();
             map.enableScrollWheelZoom();
             map.enableInertialDragging();
             map.enableContinuousZoom();
 
             if (options.center && options.zoom) {
-                map.centerAndZoom(new BMapGL.Point(options.center[0], options.center[1]), options.zoom);
+                map.centerAndZoom(new BMap.Point(options.center[0], options.center[1]), options.zoom);
             }
 
             map.setTilt(options.tilt);
@@ -123,9 +123,9 @@
             return map;
         }
         function drawregion(region){
-            var bd = new BMapGL.Boundary();
+            var bd = new BMap.Boundary();
             bd.get(region, function (rs) {
-                var hole = new BMapGL.Polygon(rs.boundaries, {
+                var hole = new BMap.Polygon(rs.boundaries, {
                     fillColor: '',
                     fillOpacity: 0.1,
                     strokeStyle: 'dashed'
@@ -137,7 +137,7 @@
         drawregion('奉贤区');
         drawregion('松江区');
             
-        var view = new mapvgl.View({
+        var view = new mapv.View({
             map: map
         });
             
@@ -147,9 +147,9 @@
             var searchInfoWindow = []
 
             for(var i = 0; i < data.length;i++) {
-                var ipoi = new BMapGL.Point(data[i].geometry.coordinates[0], data[i].geometry.coordinates[1]);
-                var marker = new BMapGL.Marker(ipoi); //创建marker对象
-                var label = new BMapGL.Label(data[i].addr,{offset: new BMapGL.Size(25,5)});
+                var ipoi = new BMap.Point(data[i].geometry.coordinates[0], data[i].geometry.coordinates[1]);
+                var marker = new BMap.Marker(ipoi); //创建marker对象
+                var label = new BMap.Label(data[i].addr,{offset: new BMap.Size(25,5)});
                 var opts = {
                   width: 200,
                   title: data[i].addr,
