@@ -137,7 +137,57 @@
         var view = new mapvgl.View({
             map: map
         });
+            
+        function add_text_point(data){
+            var points = []
+            var markers = []
+            var searchInfoWindow = []
 
+            for(var i = 0; i < data.length;i++) {
+                var ipoi = new BMapGL.Point(data[i].geometry.coordinates[0], data[i].geometry.coordinates[1]);
+                var marker = new BMapGL.Marker(ipoi); //创建marker对象
+                var label = new BMapGL.Label(data[i].addr,{offset: new BMap.Size(25,5)});
+                var opts = {
+                  width: 200,
+                  title: data[i].addr,
+                  enableMessage: false
+                };
+                marker.setLabel(label);
+
+                    points.push(ipoi)
+                markers.push(marker);
+                        map.addOverlay(markers[i]);
+                var content = "info"
+                searchInfoWindow[i] = new BMapLib.SearchInfoWindow(map, content, {
+                    title  : data[i].addr,      //标题
+                    width  : 290,             //宽度
+                    height : 105,              //高度
+                    panel  : "panel",         //检索结果面板
+                    enableAutoPan : true,     //自动平移
+                    searchTypes   :[
+                        BMAPLIB_TAB_SEARCH,   //周边检索
+                        BMAPLIB_TAB_TO_HERE,  //到这里去
+                        BMAPLIB_TAB_FROM_HERE //从这里出发
+                    ]
+                });
+                markers[i].addEventListener("click",(function(k) {
+                                return function() {
+                                    //将被点击marker置为中心
+                                    map.centerAndZoom(points[k], zoomlevel);
+                                    //在marker上打开检索信息窗口
+                                    searchInfoWindow[k].open(markers[k]);
+                                }
+                            })(i));
+            }		
+        }
+        $.get('../data/at.geojson', function(geojson) {
+
+            var geojsonDataSet = mapv.geojson.getDataSet(geojson);
+            console.log(geojsonDataSet);
+            var data = [];
+            var darray = geojsonDataSet._data;		
+            add_text_point(darray);
+        });		
         window.run = function () {}
         setTimeout(function () {
             run();
