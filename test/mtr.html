@@ -140,7 +140,8 @@
         var view = new mapvgl.View({
             map: map
         });
-            
+	var myIcon = new BMapGL.Icon("../../img/xzyz.png", new BMapGL.Size(40, 30));
+
         window.run = function () {}
         setTimeout(function () {
             run();
@@ -152,7 +153,7 @@
 
 		for(var i = 0; i < data.length;i++) {
 			var ipoi = new BMapGL.Point(data[i].geometry.coordinates[0], data[i].geometry.coordinates[1]);
-			var marker = new BMapGL.Marker(ipoi); //创建marker对象
+			var marker = new BMapGL.Marker(ipoi, {icon: myIcon}); //创建marker对象
 			var label = new BMapGL.Label(data[i].addr,{offset: new BMapGL.Size(25,5)});
 			var opts = {
 			  width: 200,
