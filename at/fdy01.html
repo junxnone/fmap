@@ -95,7 +95,7 @@
     <body>
         <div id="map_container"></div>
         <script>
-	var zoomlevel = 16
+	var zoomlevel = 18
 
         var map = initMap({
             tilt: 10,
@@ -151,6 +151,7 @@
 		var infoWindow = []
 		for(var i = 0; i < data.length;i++) {
 			var ipoi = new BMapGL.Point(data[i].geometry.coordinates[0], data[i].geometry.coordinates[1]);
+			map.centerAndZoom(ipoi, options.zoom);
 			var marker;
 			if (data[i].visit == '1') {
 				marker = new BMapGL.Marker(ipoi, {icon: myIcon});
