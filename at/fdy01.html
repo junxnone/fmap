@@ -151,7 +151,7 @@
 		var infoWindow = []
 		for(var i = 0; i < data.length;i++) {
 			var ipoi = new BMapGL.Point(data[i].geometry.coordinates[0], data[i].geometry.coordinates[1]);
-			map.centerAndZoom(ipoi, options.zoom);
+			map.centerAndZoom(ipoi, 18);
 			var marker;
 			if (data[i].visit == '1') {
 				marker = new BMapGL.Marker(ipoi, {icon: myIcon});
