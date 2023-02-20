@@ -95,7 +95,7 @@
     <body>
         <div id="map_container"></div>
         <script>
-	var zoomlevel = 12
+	var zoomlevel = 16
 
         var map = initMap({
             tilt: 10,
@@ -133,9 +133,7 @@
             });
         }
         drawregion('闵行区');
-        drawregion('奉贤区');
-        drawregion('松江区');
-        drawregion('青浦区');
+
 
         var view = new mapvgl.View({
             map: map
