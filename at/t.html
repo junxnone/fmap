@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="utf-8" >
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge" >
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" >
+        <style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        #map_container {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+        }
+        </style>
+        <script src="//api.map.baidu.com/api?v=1.0&type=webgl&ak=TgV2QFgm0rUs6MM5ZujGFvVUiyQUWhjD"></script>
+        <script src="//mapv.baidu.com/build/mapv.min.js"></script>
+        <script src="https://code.bdstatic.com/npm/mapvgl@1.0.0-beta.146/dist/mapvgl.min.js"></script>
+        <script type="text/javascript" src="//apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <title>看房</title>
+    <style>
+       body,html{
+           width: 100%;
+           height: 100%;
+           padding: 0;
+           margin: 0;
+       }
+       #container{
+           width: 100%;
+           height: 100%;
+           overflow: hidden;
+       }
+       #result{
+           position: fixed;
+           top: 10px;
+           right: 10px;
+           width: 50px;
+           height: 480px;
+           line-height: 30px;
+           text-align: center;
+           background: #fff;
+           box-shadow: 0 2px 6px 0 rgba(27, 142, 236, 0.5);
+           border-radius: 7px;
+           z-index: 99;
+       }
+      #result>div:first-child{
+            width: 100%;
+            height: 40px;
+            text-align: center;
+            line-height: 40px;
+            background: #00BFFF;
+            border-radius: 7px 7px 0px 0px;
+            color: #fff;
+      }
+      #result ul{
+           list-style-type: none;
+           margin: 0;
+           padding: 0;
+      }
+      #result ul li{
+           color: #000;
+           padding: 7px;
+           font-size: 14px;
+           text-align: justify;
+           border-bottom: 1px solid #D3D3D3  
+      }
+      #result>div:last-child{
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          padding: 0px;
+      }
+      .btn{ 
+          width: 50px;
+          height: 35px;
+          color: #fff;
+          font-size: 14px;;
+          border-radius: 5px;
+          background: #00BFFF;
+          box-shadow: none;
+      }
+      .btn:hover{
+          cursor: pointer;
+      }
+    </style>
+  </head>
+  </head>
+
+    <body>
+        <div id="map_container"></div>
+        <script>
+	      var zoomlevel = 17
+
+        var map = initMap({
+            tilt: 10,
+            center: [121.39920003512411,31.032214189548615],
+            zoom: zoomlevel,
+        });
+        function initMap(options) {
+            options = Object.assign({
+                tilt: 60,
+                heading: 0
+            }, options);
+            var map = new BMapGL.Map('map_container');
+            map.enableKeyboard();
+            map.enableScrollWheelZoom();
+            map.enableInertialDragging();
+            map.enableContinuousZoom();
+
+            if (options.center && options.zoom) {
+                map.centerAndZoom(new BMapGL.Point(options.center[0], options.center[1]), options.zoom);
+            }
+
+            map.setTilt(options.tilt);
+            map.setHeading(options.heading);
+		
+            var menu = new BMapGL.ContextMenu();
+            var txtMenuItem = [
+              {
+            text: '卫星地图模式',
+            callback: function () {
+                map.setMapType(BMAP_SATELLITE_MAP); 
+            }
+              }, {
+            text: '2D 地图模式',
+            callback: function () {
+                map.setMapType(BMAP_NORMAL_MAP); 
+            }
+              }, {
+            text: '地球地图模式',
+            callback: function () {
+                map.setMapType(BMAP_EARTH_MAP); 
+            }
+              }
+            ];
+            for (var i = 0; i < txtMenuItem.length; i++) {
+              menu.addItem(new BMapGL.MenuItem(txtMenuItem[i].text, txtMenuItem[i].callback, 100));
+             }
+            map.addContextMenu(menu);
+          	var myKeys = ["学校","超市","公交站"];
+            var mPoint = new BMapGL.Point(121.39920003512411,31.032214189548615);  
+            var circle = new BMapGL.Circle(mPoint,1000,{fillColor:"blue", strokeWeight: 1 ,fillOpacity: 0.3, strokeOpacity: 0.3});
+            map.addOverlay(circle);
+            var local =  new BMapGL.LocalSearch(map, {renderOptions: {map: map, autoViewport: false}});  
+            local.searchNearby(myKeys,mPoint,3000);
+            return map;
+        }
+        function drawregion(region){
+            var bd = new BMapGL.Boundary();
+            bd.get(region, function (rs) {
+                var hole = new BMapGL.Polygon(rs.boundaries, {
+                    fillColor: '',
+                    fillOpacity: 0.1,
+                    strokeStyle: 'dashed'
+                });
+                map.addOverlay(hole);
+            });
+        }
+        drawregion('闵行区');
+
+
+        var view = new mapvgl.View({
+            map: map
+        });
+	var myIcon = new BMapGL.Icon("../img/xzyz.png", new BMapGL.Size(40, 30));
+
+        window.run = function () {}
+        setTimeout(function () {
+            run();
+		
+	function add_text_point(data){
+		var points = []
+		var markers = []
+		var searchInfoWindow = []
+		var infoWindow = []
+		for(var i = 0; i < data.length;i++) {
+			var ipoi = new BMapGL.Point(data[i].geometry.coordinates[0], data[i].geometry.coordinates[1]);
+			var marker;
+			if (data[i].visit == '1') {
+				marker = new BMapGL.Marker(ipoi, {icon: myIcon});
+			}
+			else {
+				marker = new BMapGL.Marker(ipoi);
+			}
+			var label = new BMapGL.Label(data[i].addr,{offset: new BMapGL.Size(25,5)});
+			var opts = {
+			  width: 200,
+			  title: data[i].addr,
+			  enableMessage: false
+			};
+			marker.setLabel(label);
+
+			points.push(ipoi)
+			markers.push(marker);
+			map.addOverlay(markers[i]);
+			var content = data[i].price + '\n' + '<a href="' + data[i].wiki + '" target="_blank">wiki</a>'	
+			var opts = {
+			    width : 200,     // 信息窗口宽度
+			    height: 100,     // 信息窗口高度
+			    title : data[i].addr , // 信息窗口标题
+			    message:"info"
+			}
+			infoWindow[i] = new BMapGL.InfoWindow(content, opts);  // 创建信息窗口对象 
+			markers[i].addEventListener("click",(function(k) {
+                            return function() {
+                                //将被点击marker置为中心
+                                map.centerAndZoom(points[k], zoomlevel);
+                                //在marker上打开检索信息窗口
+                                map.openInfoWindow(infoWindow[k], points[k]);
+                            }
+                        })(i));
+		}		
+	}
+	$.get('../data/2sfmq.geojson', function(geojson) {
+	
+		var geojsonDataSet = mapv.geojson.getDataSet(geojson);
+		console.log(geojsonDataSet);
+		var data = [];
+		var darray = geojsonDataSet._data;		
+		add_text_point(darray);
+	});		
+
+        }, 1500);
+        </script>
+    </body>
+</html>
