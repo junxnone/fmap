@@ -103,53 +103,54 @@
             zoom: zoomlevel,
         });
         function initMap(options) {
-            options = Object.assign({
-                tilt: 60,
-                heading: 0
-            }, options);
-            var map = new BMapGL.Map('map_container');
-            map.enableKeyboard();
-            map.enableScrollWheelZoom();
-            map.enableInertialDragging();
-            map.enableContinuousZoom();
+		options = Object.assign({
+			tilt: 60,
+			heading: 0
+			}, options);
+		var map = new BMapGL.Map('map_container');
+		map.enableKeyboard();
+		map.enableScrollWheelZoom();
+		map.enableInertialDragging();
+		map.enableContinuousZoom();
 
-            if (options.center && options.zoom) {
-                map.centerAndZoom(new BMapGL.Point(options.center[0], options.center[1]), options.zoom);
-            }
+		if (options.center && options.zoom) {
+			map.centerAndZoom(new BMapGL.Point(options.center[0], options.center[1]), options.zoom);
+		}
 
-            map.setTilt(options.tilt);
-            map.setHeading(options.heading);
-		
-            var menu = new BMapGL.ContextMenu();
-            var txtMenuItem = [
-              {
-            text: '卫星地图模式',
-            callback: function () {
-                map.setMapType(BMAP_SATELLITE_MAP); 
-            }
-              }, {
-            text: '2D 地图模式',
-            callback: function () {
-                map.setMapType(BMAP_NORMAL_MAP); 
-            }
-              }, {
-            text: '地球地图模式',
-            callback: function () {
-                map.setMapType(BMAP_EARTH_MAP); 
-            }
-              }
-            ];
-            for (var i = 0; i < txtMenuItem.length; i++) {
-              menu.addItem(new BMapGL.MenuItem(txtMenuItem[i].text, txtMenuItem[i].callback, 100));
-             }
-            map.addContextMenu(menu);
-          	var myKeys = ["学校","超市","公交站"];
-            var mPoint = new BMapGL.Point(121.39920003512411,31.032214189548615);  
-            var circle = new BMapGL.Circle(mPoint,1000,{fillColor:"blue", strokeWeight: 1 ,fillOpacity: 0.3, strokeOpacity: 0.3});
-            map.addOverlay(circle);
-            var local =  new BMapGL.LocalSearch(map, {renderOptions: {map: map, autoViewport: false}});  
-            local.searchNearby(myKeys,mPoint,3000);
-            return map;
+		map.setTilt(options.tilt);
+		map.setHeading(options.heading);
+
+		var menu = new BMapGL.ContextMenu();
+		var txtMenuItem = [
+			{
+			text: '卫星地图模式',
+			callback: function () {
+			map.setMapType(BMAP_SATELLITE_MAP); 
+			}
+			}, {
+			text: '2D 地图模式',
+			callback: function () {
+			map.setMapType(BMAP_NORMAL_MAP); 
+			}
+			}, {
+			text: '地球地图模式',
+			callback: function () {
+			map.setMapType(BMAP_EARTH_MAP); 
+			}
+			}
+		];
+		for (var i = 0; i < txtMenuItem.length; i++) {
+			menu.addItem(new BMapGL.MenuItem(txtMenuItem[i].text, txtMenuItem[i].callback, 100));
+		}
+		map.addContextMenu(menu);
+		var myKeys = ["学校","超市","公交"];
+		var dis = 2000
+		var mPoint = new BMapGL.Point(options.center[0], options.center[1]);  
+		var circle = new BMapGL.Circle(mPoint,dis,{fillColor:"blue", strokeWeight: 1 ,fillOpacity: 0.3, strokeOpacity: 0.3});
+		map.addOverlay(circle);
+		var local =  new BMapGL.LocalSearch(map, {renderOptions: {map: map, autoViewport: false}});  
+		local.searchNearby(myKeys,mPoint,dis);
+		return map;
         }
         function drawregion(region){
             var bd = new BMapGL.Boundary();
