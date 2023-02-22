@@ -119,7 +119,8 @@
 
 		map.setTilt(options.tilt);
 		map.setHeading(options.heading);
-
+		var scaleCtrl = new BMapGL.ScaleControl();  // 添加比例尺控件
+		map.addControl(scaleCtrl);
 		var menu = new BMapGL.ContextMenu();
 		var txtMenuItem = [
 			{
