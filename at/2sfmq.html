@@ -119,9 +119,27 @@
 
             map.setTilt(options.tilt);
             map.setHeading(options.heading);
+		
+	    var menu = new BMapGL.ContextMenu();
+	    var txtMenuItem = [
+		    {
+			text: '放大一级',
+			callback: function () {
+			    map.zoomIn();
+			}
+		    }, {
+			text: '缩小一级',
+			callback: function () {
+			    map.zoomOut();
+			}
+		    }
+		];
+	    for (var i = 0; i < txtMenuItem.length; i++) {
+		    menu.addItem(new BMapGL.MenuItem(txtMenuItem[i].text, txtMenuItem[i].callback, 100));
+	     }
+  	     map.addContextMenu(menu);
 	    //map.setMapType(BMAP_SATELLITE_MAP);  
-	    map.addControl(new BMap.NavigationControl());
-	    map.addControl(new BMap.MapTypeControl({mapTypes : [BMAP_NORMAL_MAP, BMAP_SATELLITE_MAP]}));
+	    //map.addControl(new BMap.MapTypeControl({mapTypes : [BMAP_NORMAL_MAP, BMAP_SATELLITE_MAP]}));
             return map;
         }
         function drawregion(region){
