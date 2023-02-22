@@ -123,14 +123,19 @@
 	    var menu = new BMapGL.ContextMenu();
 	    var txtMenuItem = [
 		    {
-			text: '放大一级',
+			text: '卫星地图模式',
 			callback: function () {
-			    map.zoomIn();
+			    map.setMapType(BMAP_SATELLITE_MAP); 
 			}
 		    }, {
-			text: '缩小一级',
+			text: '2D 地图模式',
 			callback: function () {
-			    map.zoomOut();
+			    map.setMapType(BMAP_NORMAL_MAP); 
+			}
+		    }, {
+			text: '地球地图模式',
+			callback: function () {
+			    map.setMapType(BMAP_EARTH_MAP); 
 			}
 		    }
 		];
