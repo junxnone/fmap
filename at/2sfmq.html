@@ -119,7 +119,9 @@
 
             map.setTilt(options.tilt);
             map.setHeading(options.heading);
-	    map.setMapType(BMAP_SATELLITE_MAP);  
+	    //map.setMapType(BMAP_SATELLITE_MAP);  
+	    map.addControl(new BMap.NavigationControl());
+	    map.addControl(new BMap.MapTypeControl({mapTypes : [BMAP_NORMAL_MAP, BMAP_SATELLITE_MAP]}));
             return map;
         }
         function drawregion(region){
