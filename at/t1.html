@@ -196,16 +196,16 @@
 		var myswCtrl = new swControl();
 		map.addControl(myswCtrl);
 		
-		//添加搜索按钮
-		var myKeys = ["学校","超市","餐馆"];
-		var mPoint = new BMapGL.Point(options.center[0], options.center[1]);  
-		var circle1 = new BMapGL.Circle(mPoint,1000,{fillColor:"blue", strokeWeight: 1 ,fillOpacity: 0.1, strokeOpacity: 0.3});
-		map.addOverlay(circle1);
-		var circle2 = new BMapGL.Circle(mPoint,2000,{fillColor:"blue", strokeWeight: 1 ,fillOpacity: 0.075, strokeOpacity: 0.3});
-		map.addOverlay(circle2);
-		var circle3 = new BMapGL.Circle(mPoint,3000,{fillColor:"blue", strokeWeight: 1 ,fillOpacity: 0.05, strokeOpacity: 0.3});
-		map.addOverlay(circle3);
+		// 添加生活圈 1km/2km/3km/...
+		var mPoint = new BMapGL.Point(options.center[0], options.center[1]); 
+		var cmax = 5; // 最大生活圈
+		for(i = cmax; i > 0 ;i--){
+			var circlei = new BMapGL.Circle(mPoint,i * 1000,{fillColor:"blue", strokeWeight: 1 ,fillOpacity: 0.1, strokeOpacity: 0.3});
+			map.addOverlay(circlei);
+		}
+
 		
+		//添加搜索按钮
 		function addbtn(map,y,key) {
 			function seControl() {
 			    this.defaultAnchor = BMAP_ANCHOR_TOP_LEFT;
