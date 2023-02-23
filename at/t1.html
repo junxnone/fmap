@@ -221,7 +221,8 @@
 			    div.style.borderRadius = "5px";
 			    div.style.backgroundColor = "white";
 			    div.onclick = function(e){
-				var local =  new BMapGL.LocalSearch(map, {renderOptions: {map: map, autoViewport: true}});  
+				var local =  new BMapGL.LocalSearch(map, {renderOptions: {map: map, autoViewport: true}}); 
+				local.clearResults();
 				local.searchNearby(key,mPoint,1000);
 			    }
 			    map.getContainer().appendChild(div);
