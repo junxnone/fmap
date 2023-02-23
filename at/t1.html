@@ -95,23 +95,20 @@
     <body>
         <div id="map_container"></div>
         <script>
+
+	var data = [];
 	$.get('../data/fdy02.geojson', function(geojson) {
-	
 		var geojsonDataSet = mapv.geojson.getDataSet(geojson);
-		console.log(geojsonDataSet);
-		var data = [];
-		var darray = geojsonDataSet._data;
-		var zoomlevel = 19
-		var map = initMap({
-		    tilt: 10,
-		    center: [data[0].geometry.coordinates[0], data[0].geometry.coordinates[1]],
-		    zoom: zoomlevel,
-		});
-		
-		add_text_point(darray);
+		//console.log(geojsonDataSet);
+		data = geojsonDataSet._data;	
 	});		
-
-
+	var zoomlevel = 19
+	var map = initMap({
+	    tilt: 10,
+	    center: [data[0].geometry.coordinates[0], data[0].geometry.coordinates[1]],
+	    zoom: zoomlevel,
+	});
+	add_text_point(data);
 
         function initMap(options) {
 		options = Object.assign({
@@ -225,8 +222,6 @@
             map: map
         });
 	var myIcon = new BMapGL.Icon("../img/xzyz.png", new BMapGL.Size(40, 30));
-
-
 		
 	function add_text_point(data){
 		var points = []
