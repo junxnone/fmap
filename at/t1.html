@@ -143,6 +143,9 @@
 		map.setTilt(options.tilt);
 		map.setHeading(options.heading);
 		
+		// 添加3D控件
+		var navi3DCtrl = new BMapGL.NavigationControl3D(); 
+		map.addControl(navi3DCtrl);
 		
 		// 添加比例尺控件
 		var scaleCtrl = new BMapGL.ScaleControl();  
