@@ -250,7 +250,6 @@
 		
 		// 添加交通流量按钮
 		var initt = 0
-		map.setTrafficOn();
 		function tControl() {
 		    this.defaultAnchor = BMAP_ANCHOR_TOP_LEFT;
 		    this.defaultOffset = new BMapGL.Size(150,0)
@@ -265,13 +264,13 @@
 		    div.style.borderRadius = "5px";
 		    div.style.backgroundColor = "white";
 		    div.onclick = function(e){
-			if (init == 0){
+			if (initt == 0){
 				map.setTrafficOn(); 
 				initt = 1;
 			}
 		    	else{
 				map.setTrafficOff();
-				init = 0;
+				initt = 0;
 			}
 		    }
 		    map.getContainer().appendChild(div);
