@@ -102,14 +102,21 @@
 		//console.log(geojsonDataSet);
 		data = geojsonDataSet._data;	
 	});		
+	
 	var zoomlevel = 19
-	var map = initMap({
-	    tilt: 10,
-	    center: [data[0].geometry.coordinates[0], data[0].geometry.coordinates[1]],
-	    zoom: zoomlevel,
-	});
-	add_text_point(data);
-
+	var map;
+	setTimeout(function () {
+		var map = initMap({
+		    tilt: 10,
+		    center: [data[0].geometry.coordinates[0], data[0].geometry.coordinates[1]],
+		    zoom: zoomlevel,
+		});
+		add_text_point(data);
+		drawregion('闵行区');
+		var view = new mapvgl.View({
+		    map: map
+		});
+		},1500);
         function initMap(options) {
 		options = Object.assign({
 			tilt: 60,
@@ -215,12 +222,7 @@
                 map.addOverlay(hole);
             });
         }
-        drawregion('闵行区');
 
-
-        var view = new mapvgl.View({
-            map: map
-        });
 	var myIcon = new BMapGL.Icon("../img/xzyz.png", new BMapGL.Size(40, 30));
 		
 	function add_text_point(data){
