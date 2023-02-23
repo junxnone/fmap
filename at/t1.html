@@ -244,10 +244,42 @@
 		addsebtn(map,0,40,"幼儿园");
 		addsebtn(map,0,80,"小学");
 		addsebtn(map,0,120,"中学");
-		addsebtn(map,150,0,"超市");
-		addsebtn(map,210,0,"公园");
-		addsebtn(map,270,0,"清除");
+		addsebtn(map,210,0,"超市");
+		addsebtn(map,270,0,"公园");
+		addsebtn(map,330,0,"清除");
+		
+		// 添加交通流量按钮
+		var initt = 0
 		map.setTrafficOn();
+		function tControl() {
+		    this.defaultAnchor = BMAP_ANCHOR_TOP_LEFT;
+		    this.defaultOffset = new BMapGL.Size(150,0)
+		}
+		seControl.prototype = new BMapGL.Control();
+		seControl.prototype.initialize = function(map) {
+		    var div = document.createElement('div');
+		    div.appendChild(document.createTextNode("交通"));
+		    div.style.cursor = "pointer";
+		    div.style.padding = "7px 10px";
+		    div.style.boxShadow = "0 2px 6px 0 rgba(27, 142, 236, 0.5)";
+		    div.style.borderRadius = "5px";
+		    div.style.backgroundColor = "white";
+		    div.onclick = function(e){
+			if (init == 0){
+				map.setTrafficOn(); 
+				initt = 1;
+			}
+		    	else{
+				map.setTrafficOff();
+				init = 0;
+			}
+		    }
+		    map.getContainer().appendChild(div);
+		    return div;
+		}
+		var mytCtrl = new tControl();
+		map.addControl(mytCtrl);
+		
 		return map;
         }
         function drawregion(region){
