@@ -215,7 +215,7 @@
 
 		
 		//添加搜索按钮
-		var se_dis = 2000; //搜索半径
+		var se_dis = 1000; //搜索半径
 		function addsebtn(map,y,x,key) {
 			function seControl() {
 			    this.defaultAnchor = BMAP_ANCHOR_TOP_LEFT;
@@ -234,6 +234,7 @@
 				var local =  new BMapGL.LocalSearch(map, {renderOptions: {map: map, autoViewport: true}}); 
 				if(key != "清除") {
 					local.searchNearby(key,mPoint,se_dis);
+					se_dis = se_dis + 1000;
 				}
 			    	else{
 					var alloverlay = map.getOverlays();
