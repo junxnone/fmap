@@ -223,7 +223,9 @@
 			    div.onclick = function(e){
 				var local =  new BMapGL.LocalSearch(map, {renderOptions: {map: map, autoViewport: true}}); 
 				local.clearResults();
-				local.searchNearby(key,mPoint,1000);
+				if(key != "清除") {
+					local.searchNearby(key,mPoint,1000);
+				}
 			    }
 			    map.getContainer().appendChild(div);
 			    return div;
@@ -233,8 +235,8 @@
 		}
 		addbtn(map,150,"学校");
 		addbtn(map,200,"超市");
-		addbtn(map,150,"公园");
-
+		addbtn(map,250,"公园");
+		addbtn(map,300,"清除");
 
 		return map;
         }
