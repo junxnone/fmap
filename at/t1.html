@@ -168,13 +168,13 @@
 		map.addContextMenu(menu);
 		
 		//模式切换按钮
-		function ZoomControl() {
+		function swControl() {
 		    this.defaultAnchor = BMAP_ANCHOR_TOP_LEFT;
 		    this.defaultOffset = new BMapGL.Size(10, 10)
 		}
-		ZoomControl.prototype = new BMapGL.Control();
+		swControl.prototype = new BMapGL.Control();
 
-		ZoomControl.prototype.initialize = function(map) {
+		swControl.prototype.initialize = function(map) {
 		    var div = document.createElement('div');
 		    div.appendChild(document.createTextNode('切换2D/卫星模式'));
 		    div.style.cursor = "pointer";
@@ -194,8 +194,8 @@
 		    map.getContainer().appendChild(div);
 		    return div;
 		}
-		var myZoomCtrl = new ZoomControl();
-		map.addControl(myZoomCtrl);
+		var myswCtrl = new swControl();
+		map.addControl(myswCtrl);
 		
 		
 		// 添加检索内容
