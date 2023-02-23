@@ -222,9 +222,12 @@
 			    div.style.backgroundColor = "white";
 			    div.onclick = function(e){
 				var local =  new BMapGL.LocalSearch(map, {renderOptions: {map: map, autoViewport: true}}); 
-				local.clearResults();
 				if(key != "清除") {
 					local.searchNearby(key,mPoint,1000);
+				}
+			    	else{
+					alloverlay = map.getOverlays();
+					map.removeOverlay(alloverlay[alloverlay.length-1]);
 				}
 			    }
 			    map.getContainer().appendChild(div);
@@ -234,9 +237,9 @@
 			map.addControl(myseCtrl);
 		}
 		addbtn(map,150,"学校");
-		addbtn(map,200,"超市");
-		addbtn(map,250,"公园");
-		addbtn(map,300,"清除");
+		addbtn(map,210,"超市");
+		addbtn(map,270,"公园");
+		addbtn(map,330,"清除");
 
 		return map;
         }
