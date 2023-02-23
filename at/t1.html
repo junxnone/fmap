@@ -95,13 +95,25 @@
     <body>
         <div id="map_container"></div>
         <script>
-	      var zoomlevel = 19
+	$.get('../data/fdy02.geojson', function(geojson) {
+	
+		var geojsonDataSet = mapv.geojson.getDataSet(geojson);
+		console.log(geojsonDataSet);
+		var data = [];
+		var darray = geojsonDataSet._data;
+		var zoomlevel = 19
+		var map = initMap({
+		    tilt: 10,
+		    center: [data[i].geometry.coordinates[0], data[i].geometry.coordinates[1]],
+		    zoom: zoomlevel,
+		});
+		
+		add_text_point(darray);
+	});		
 
-        var map = initMap({
-            tilt: 10,
-            center: [121.39920003512411,31.032214189548615],
-            zoom: zoomlevel,
-        });
+        }, 1500);
+
+
         function initMap(options) {
 		options = Object.assign({
 			tilt: 60,
@@ -264,16 +276,7 @@
                         })(i));
 		}		
 	}
-	$.get('../data/fdy02.geojson', function(geojson) {
-	
-		var geojsonDataSet = mapv.geojson.getDataSet(geojson);
-		console.log(geojsonDataSet);
-		var data = [];
-		var darray = geojsonDataSet._data;		
-		add_text_point(darray);
-	});		
 
-        }, 1500);
         </script>
     </body>
 </html>
