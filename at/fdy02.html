@@ -149,6 +149,10 @@
 		var scaleCtrl = new BMapGL.ScaleControl();  
 		map.addControl(scaleCtrl);
 		
+		// 添加3D控件
+		var navi3DCtrl = new BMapGL.NavigationControl3D(); 
+		map.addControl(navi3DCtrl);
+
 		//添加地图
 		var menu = new BMapGL.ContextMenu();
 		var txtMenuItem = [
