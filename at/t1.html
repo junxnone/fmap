@@ -167,13 +167,12 @@
 		}
 		map.addContextMenu(menu);
 		
-		//模式切换按钮
+		//地图模式切换按钮
 		function swControl() {
 		    this.defaultAnchor = BMAP_ANCHOR_TOP_LEFT;
 		    this.defaultOffset = new BMapGL.Size(10, 10)
 		}
 		swControl.prototype = new BMapGL.Control();
-
 		swControl.prototype.initialize = function(map) {
 		    var div = document.createElement('div');
 		    div.appendChild(document.createTextNode('切换2D/卫星模式'));
@@ -196,6 +195,39 @@
 		}
 		var myswCtrl = new swControl();
 		map.addControl(myswCtrl);
+		
+		//添加搜索按钮
+		var myKeys = ["学校","超市","餐馆"];
+		var mPoint = new BMapGL.Point(options.center[0], options.center[1]);  
+		var circle1 = new BMapGL.Circle(mPoint,1000,{fillColor:"blue", strokeWeight: 1 ,fillOpacity: 0.1, strokeOpacity: 0.3});
+		map.addOverlay(circle1);
+		var circle2 = new BMapGL.Circle(mPoint,2000,{fillColor:"blue", strokeWeight: 1 ,fillOpacity: 0.075, strokeOpacity: 0.3});
+		map.addOverlay(circle2);
+		var circle3 = new BMapGL.Circle(mPoint,3000,{fillColor:"blue", strokeWeight: 1 ,fillOpacity: 0.05, strokeOpacity: 0.3});
+		map.addOverlay(circle3);
+		
+		function seControl() {
+		    this.defaultAnchor = BMAP_ANCHOR_TOP_LEFT;
+		    this.defaultOffset = new BMapGL.Size(100, 10)
+		}
+		seControl.prototype = new BMapGL.Control();
+		seControl.prototype.initialize = function(map) {
+		    var div = document.createElement('div');
+		    div.appendChild(document.createTextNode('附近的资源'));
+		    div.style.cursor = "pointer";
+		    div.style.padding = "7px 10px";
+		    div.style.boxShadow = "0 2px 6px 0 rgba(27, 142, 236, 0.5)";
+		    div.style.borderRadius = "5px";
+		    div.style.backgroundColor = "white";
+		    div.onclick = function(e){
+			var local =  new BMapGL.LocalSearch(map, {renderOptions: {map: map, autoViewport: true}});  
+			local.searchNearby(myKeys,mPoint,1000);
+		    }
+		    map.getContainer().appendChild(div);
+		    return div;
+		}
+		var myseCtrl = new seControl();
+		map.addControl(myseCtrl);
 		
 		
 		// 添加检索内容
