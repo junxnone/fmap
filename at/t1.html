@@ -104,8 +104,8 @@
         });
         function initMap(options) {
 		options = Object.assign({
-			tilt: 73,
-			heading: 64.5
+			tilt: 60,
+			heading: 0
 			}, options);
 		var map = new BMapGL.Map('map_container');
 		map.enableKeyboard();
@@ -201,7 +201,7 @@
             bd.get(region, function (rs) {
                 var hole = new BMapGL.Polygon(rs.boundaries, {
                     fillColor: '',
-                    fillOpacity: 0.1,
+                    fillOpacity: 0.03,
                     strokeStyle: 'dashed'
                 });
                 map.addOverlay(hole);
@@ -256,6 +256,8 @@
                             return function() {
                                 //将被点击marker置为中心
                                 map.centerAndZoom(points[k], zoomlevel);
+				map.setHeading(64.5);
+				map.setTilt(73);
                                 //在marker上打开检索信息窗口
                                 map.openInfoWindow(infoWindow[k], points[k]);
                             }
