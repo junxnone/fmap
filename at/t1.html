@@ -255,8 +255,8 @@
 		    this.defaultAnchor = BMAP_ANCHOR_TOP_LEFT;
 		    this.defaultOffset = new BMapGL.Size(150,0)
 		}
-		seControl.prototype = new BMapGL.Control();
-		seControl.prototype.initialize = function(map) {
+		tControl.prototype = new BMapGL.Control();
+		tControl.prototype.initialize = function(map) {
 		    var div = document.createElement('div');
 		    div.appendChild(document.createTextNode("交通"));
 		    div.style.cursor = "pointer";
