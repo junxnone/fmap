@@ -207,7 +207,7 @@
 		
 		//添加搜索按钮
 		var se_dis = 2000; //搜索半径
-		function addbtn(map,y,x,key) {
+		function addsebtn(map,y,x,key) {
 			function seControl() {
 			    this.defaultAnchor = BMAP_ANCHOR_TOP_LEFT;
 			    this.defaultOffset = new BMapGL.Size(y, x)
@@ -241,13 +241,13 @@
 		}
 		var ovl = 8;//map.getOverlays().length
 		
-		addbtn(map,0,40,"幼儿园");
-		addbtn(map,0,80,"小学");
-		addbtn(map,0,120,"中学");
-		addbtn(map,150,0,"超市");
-		addbtn(map,210,0,"公园");
-		addbtn(map,270,0,"清除");
-
+		addsebtn(map,0,40,"幼儿园");
+		addsebtn(map,0,80,"小学");
+		addsebtn(map,0,120,"中学");
+		addsebtn(map,150,0,"超市");
+		addsebtn(map,210,0,"公园");
+		addsebtn(map,270,0,"清除");
+		map.setTrafficOn();
 		return map;
         }
         function drawregion(region){
