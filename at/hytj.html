@@ -23,6 +23,7 @@
         <script src="//mapv.baidu.com/build/mapv.min.js"></script>
         <script src="https://code.bdstatic.com/npm/mapvgl@1.0.0-beta.146/dist/mapvgl.min.js"></script>
         <script type="text/javascript" src="//apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+
     <title>看房</title>
     <style>
        body,html{
@@ -89,62 +90,214 @@
           cursor: pointer;
       }
     </style>
-</head>
-    </head>
+  </head>
+  </head>
 
     <body>
         <div id="map_container"></div>
         <script>
-	var zoomlevel = 12
 
-        var map = initMap({
-            tilt: 10,
-            center: [121.422,30.993],
-            zoom: zoomlevel,
-        });
+	var data = [];
+	$.get('../data/hytj.geojson', function(geojson) {
+		var geojsonDataSet = mapv.geojson.getDataSet(geojson);
+		//console.log(geojsonDataSet);
+		data = geojsonDataSet._data;	
+	});		
+	
+	var zoomlevel = 19
+	var map;
+	setTimeout(function () {
+		map = initMap({
+		    tilt: 10,
+		    center: [data[0].geometry.coordinates[0], data[0].geometry.coordinates[1]],
+		    zoom: zoomlevel,
+		});
+		drawregion('闵行区');
+		var view = new mapvgl.View({
+		    map: map
+		});
+		
+		setTimeout(function () {
+			add_text_point(data);
+		},1000);
+	},1500);
+		
         function initMap(options) {
-            options = Object.assign({
-                tilt: 60,
-                heading: 0
-            }, options);
-            var map = new BMapGL.Map('map_container');
-            map.enableKeyboard();
-            map.enableScrollWheelZoom();
-            map.enableInertialDragging();
-            map.enableContinuousZoom();
+		options = Object.assign({
+			tilt: 60,
+			heading: 0
+			}, options);
+		var map = new BMapGL.Map('map_container');
+		map.enableKeyboard();
+		map.enableScrollWheelZoom();
+		map.enableInertialDragging();
+		map.enableContinuousZoom();
 
-            if (options.center && options.zoom) {
-                map.centerAndZoom(new BMapGL.Point(options.center[0], options.center[1]), options.zoom);
-            }
+		if (options.center && options.zoom) {
+			map.centerAndZoom(new BMapGL.Point(options.center[0], options.center[1]), options.zoom);
+		}
 
-            map.setTilt(options.tilt);
-            map.setHeading(options.heading);
-            return map;
+		map.setTilt(options.tilt);
+		map.setHeading(options.heading);
+		
+		
+		// 添加比例尺控件
+		var scaleCtrl = new BMapGL.ScaleControl();  
+		map.addControl(scaleCtrl);
+		
+		//添加地图
+		var menu = new BMapGL.ContextMenu();
+		var txtMenuItem = [
+			{
+			text: '卫星地图模式',
+			callback: function () {
+			map.setMapType(BMAP_SATELLITE_MAP); 
+			}
+			}, {
+			text: '2D 地图模式',
+			callback: function () {
+			map.setMapType(BMAP_NORMAL_MAP); 
+			}
+			}, {
+			text: '地球地图模式',
+			callback: function () {
+			map.setMapType(BMAP_EARTH_MAP); 
+			}
+			}
+		];
+		for (var i = 0; i < txtMenuItem.length; i++) {
+			menu.addItem(new BMapGL.MenuItem(txtMenuItem[i].text, txtMenuItem[i].callback, 100));
+		}
+		map.addContextMenu(menu);
+		
+		//地图模式切换按钮
+		function swControl() {
+		    this.defaultAnchor = BMAP_ANCHOR_TOP_LEFT;
+		    this.defaultOffset = new BMapGL.Size(0, 0)
+		}
+		swControl.prototype = new BMapGL.Control();
+		swControl.prototype.initialize = function(map) {
+		    var div = document.createElement('div');
+		    div.appendChild(document.createTextNode('切换2D/卫星模式'));
+		    div.style.cursor = "pointer";
+		    div.style.padding = "7px 10px";
+		    div.style.boxShadow = "0 2px 6px 0 rgba(27, 142, 236, 0.5)";
+		    div.style.borderRadius = "5px";
+		    div.style.backgroundColor = "white";
+		    div.onclick = function(e){
+			var maptype = map.getMapType()
+			if(maptype == "B_NORMAL_MAP"){
+				map.setMapType(BMAP_SATELLITE_MAP); 
+			}
+			else{
+				map.setMapType(BMAP_NORMAL_MAP); 
+			}
+		    }
+		    map.getContainer().appendChild(div);
+		    return div;
+		}
+		var myswCtrl = new swControl();
+		map.addControl(myswCtrl);
+		
+		// 添加生活圈 1km/2km/3km/...
+		var mPoint = new BMapGL.Point(options.center[0], options.center[1]); 
+		var cmax = 5; // 最大生活圈
+		for(i = cmax; i > 0 ;i--){
+			var circlei = new BMapGL.Circle(mPoint,i * 1000,{fillColor:"blue", strokeWeight: 1 ,fillOpacity: i*0.01, strokeOpacity: 0.3});
+			map.addOverlay(circlei);
+		}
+
+		
+		//添加搜索按钮
+		var se_dis = 2000; //搜索半径
+		function addsebtn(map,y,x,key) {
+			function seControl() {
+			    this.defaultAnchor = BMAP_ANCHOR_TOP_LEFT;
+			    this.defaultOffset = new BMapGL.Size(y, x)
+			}
+			seControl.prototype = new BMapGL.Control();
+			seControl.prototype.initialize = function(map) {
+			    var div = document.createElement('div');
+			    div.appendChild(document.createTextNode(key));
+			    div.style.cursor = "pointer";
+			    div.style.padding = "7px 10px";
+			    div.style.boxShadow = "0 2px 6px 0 rgba(27, 142, 236, 0.5)";
+			    div.style.borderRadius = "5px";
+			    div.style.backgroundColor = "white";
+			    div.onclick = function(e){
+				var local =  new BMapGL.LocalSearch(map, {renderOptions: {map: map, autoViewport: true}}); 
+				if(key != "清除") {
+					local.searchNearby(key,mPoint,se_dis);
+				}
+			    	else{
+					var alloverlay = map.getOverlays();
+					for(i=alloverlay.length; i > ovl; i--){
+						map.removeOverlay(alloverlay[i-1]);
+					}
+				}
+			    }
+			    map.getContainer().appendChild(div);
+			    return div;
+			}
+			var myseCtrl = new seControl();
+			map.addControl(myseCtrl);
+		}
+		var ovl = 8;//map.getOverlays().length
+		
+		addsebtn(map,0,40,"幼儿园");
+		addsebtn(map,0,80,"小学");
+		addsebtn(map,0,120,"中学");
+		addsebtn(map,210,0,"超市");
+		addsebtn(map,270,0,"公园");
+		addsebtn(map,330,0,"清除");
+		
+		// 添加交通流量按钮
+		var initt = 0
+		function tControl() {
+		    this.defaultAnchor = BMAP_ANCHOR_TOP_LEFT;
+		    this.defaultOffset = new BMapGL.Size(150,0)
+		}
+		tControl.prototype = new BMapGL.Control();
+		tControl.prototype.initialize = function(map) {
+		    var div = document.createElement('div');
+		    div.appendChild(document.createTextNode("交通"));
+		    div.style.cursor = "pointer";
+		    div.style.padding = "7px 10px";
+		    div.style.boxShadow = "0 2px 6px 0 rgba(27, 142, 236, 0.5)";
+		    div.style.borderRadius = "5px";
+		    div.style.backgroundColor = "white";
+		    div.onclick = function(e){
+			if (initt == 0){
+				map.setTrafficOn(); 
+				initt = 1;
+			}
+		    	else{
+				map.setTrafficOff();
+				initt = 0;
+			}
+		    }
+		    map.getContainer().appendChild(div);
+		    return div;
+		}
+		var mytCtrl = new tControl();
+		map.addControl(mytCtrl);
+		
+
+		return map;
         }
         function drawregion(region){
             var bd = new BMapGL.Boundary();
             bd.get(region, function (rs) {
                 var hole = new BMapGL.Polygon(rs.boundaries, {
                     fillColor: '',
-                    fillOpacity: 0.1,
+                    fillOpacity: 0.03,
                     strokeStyle: 'dashed'
                 });
                 map.addOverlay(hole);
             });
         }
-        drawregion('闵行区');
-        drawregion('奉贤区');
-        drawregion('松江区');
-        drawregion('青浦区');
 
-        var view = new mapvgl.View({
-            map: map
-        });
 	var myIcon = new BMapGL.Icon("../img/xzyz.png", new BMapGL.Size(40, 30));
-
-        window.run = function () {}
-        setTimeout(function () {
-            run();
 		
 	function add_text_point(data){
 		var points = []
@@ -183,22 +336,15 @@
                             return function() {
                                 //将被点击marker置为中心
                                 map.centerAndZoom(points[k], zoomlevel);
+				map.setHeading(64.5);
+				map.setTilt(73);
                                 //在marker上打开检索信息窗口
                                 map.openInfoWindow(infoWindow[k], points[k]);
                             }
                         })(i));
 		}		
 	}
-	$.get('../data/hytj.geojson', function(geojson) {
-	
-		var geojsonDataSet = mapv.geojson.getDataSet(geojson);
-		console.log(geojsonDataSet);
-		var data = [];
-		var darray = geojsonDataSet._data;		
-		add_text_point(darray);
-	});		
 
-        }, 1500);
         </script>
     </body>
 </html>
