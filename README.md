@@ -30,6 +30,7 @@
 
 ## Multi Marker
 
+- [all](https://junxnone.github.io/fmap/mp/all)
 - [一手房](https://junxnone.github.io/fmap/mp/1sf)
 - [二手房](https://junxnone.github.io/fmap/mp/2sf)
 - [二手房马桥](https://junxnone.github.io/fmap/mp/2sfmq)
