@@ -212,7 +212,7 @@
 			    this.defaultOffset = new BMapGL.Size(y, 0)
 			}
 			seControl.prototype = new BMapGL.Control();
-			seControl.prototype.initialize = function(map,key) {
+			seControl.prototype.initialize = function(map) {
 			    var div = document.createElement('div');
 			    div.appendChild(document.createTextNode(key));
 			    div.style.cursor = "pointer";
