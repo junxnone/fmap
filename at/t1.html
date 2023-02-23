@@ -229,20 +229,6 @@
 		var myseCtrl = new seControl();
 		map.addControl(myseCtrl);
 		
-		
-		// 添加检索内容
-		var myKeys = ["学校","超市","餐馆"];
-		var dis = 1000
-		var mPoint = new BMapGL.Point(options.center[0], options.center[1]);  
-		var circle1 = new BMapGL.Circle(mPoint,1000,{fillColor:"blue", strokeWeight: 1 ,fillOpacity: 0.1, strokeOpacity: 0.3});
-		map.addOverlay(circle1);
-		var circle2 = new BMapGL.Circle(mPoint,2000,{fillColor:"blue", strokeWeight: 1 ,fillOpacity: 0.075, strokeOpacity: 0.3});
-		map.addOverlay(circle2);
-		var circle3 = new BMapGL.Circle(mPoint,3000,{fillColor:"blue", strokeWeight: 1 ,fillOpacity: 0.05, strokeOpacity: 0.3});
-		map.addOverlay(circle3);
-		var local =  new BMapGL.LocalSearch(map, {renderOptions: {map: map, autoViewport: true}});  
-		local.searchNearby(myKeys,mPoint,dis);
-		
 		return map;
         }
         function drawregion(region){
