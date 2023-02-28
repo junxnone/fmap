@@ -143,7 +143,7 @@
 
 		map.setTilt(options.tilt);
 		map.setHeading(options.heading);
-
+		
 		// 添加3D控件
 		var navi3DCtrl = new BMapGL.NavigationControl3D(); 
 		map.addControl(navi3DCtrl);
@@ -216,7 +216,7 @@
 
 		
 		//添加搜索按钮
-		var se_dis = 2000; //搜索半径
+		var se_dis = 1000; //搜索半径
 		function addsebtn(map,y,x,key) {
 			function seControl() {
 			    this.defaultAnchor = BMAP_ANCHOR_TOP_LEFT;
@@ -235,12 +235,14 @@
 				var local =  new BMapGL.LocalSearch(map, {renderOptions: {map: map, autoViewport: true}}); 
 				if(key != "清除") {
 					local.searchNearby(key,mPoint,se_dis);
+					se_dis = se_dis + 1000;
 				}
 			    	else{
 					var alloverlay = map.getOverlays();
 					for(i=alloverlay.length; i > ovl; i--){
 						map.removeOverlay(alloverlay[i-1]);
 					}
+					se_dis = 1000;
 				}
 			    }
 			    map.getContainer().appendChild(div);
@@ -343,7 +345,7 @@
                             return function() {
                                 //将被点击marker置为中心
                                 map.centerAndZoom(points[k], zoomlevel);
-				map.setHeading(64.5);
+				//map.setHeading(64.5);
 				map.setTilt(73);
                                 //在marker上打开检索信息窗口
                                 map.openInfoWindow(infoWindow[k], points[k]);
