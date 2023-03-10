@@ -107,7 +107,6 @@
 
     <body>
         <div id="map_container"></div>
-	<div id='r-result'></div>
         <script>
 
 	var data = [];
@@ -368,7 +367,7 @@
 	}
 		
 	var busline = new BMapGL.BusLineSearch(map,{
-            renderOptions:{map:map,panel:"r-result"},
+            renderOptions:{map:map},
             onGetBusListComplete: function(result){
                 if(result) {
                     var fstLine = result.getBusListItem(0);//获取第一个公交列表显示到map上
@@ -376,13 +375,15 @@
                 }
             }
         });
-        function busSearch(){
-            var busName = '23号线';
+        function busSearch(name){
+            var busName = name;
             busline.getBusList(busName);
         }
         setTimeout(function(){
-            busSearch();
-        },1500);
+            busSearch('23号线');
+            busSearch('5号线');
+            busSearch('15号线');
+	},1500);
 
         </script>
     </body>
