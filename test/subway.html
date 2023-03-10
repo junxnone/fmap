@@ -124,9 +124,6 @@
 		setTimeout(function () {
 			add_text_point(data);
 		},1000);
-		setTimeout(function(){
-		    busSearch('23号线');
-		},2500);
 	},1500);
 		
         function initMap(options) {
@@ -261,6 +258,7 @@
 		addsebtn(map,0,120,"中学");
 		addsebtn(map,0,160,"超市");
 		addsebtn(map,0,200,"公园");
+		addsebtn(map,0,240,"地铁");
 		addsebtn(map,210,0,"清除");
 		
 		// 添加交通流量按钮
@@ -357,19 +355,6 @@
 		}		
 	}
 		
-	var busline = new BMapGL.BusLineSearch(map,{
-            renderOptions:{map:map},
-            onGetBusListComplete: function(result){
-                if(result) {
-                    var fstLine = result.getBusListItem(0);//获取第一个公交列表显示到map上
-                    busline.getBusLine(fstLine);
-                }
-            }
-        });
-        function busSearch(name){
-            var busName = name;
-            busline.getBusList(busName);
-        }
 
         </script>
     </body>
