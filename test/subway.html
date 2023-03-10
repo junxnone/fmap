@@ -353,6 +353,23 @@
                         })(i));
 		}		
 	}
+		
+	var busline = new BMapGL.BusLineSearch(map,{
+            renderOptions:{map:map,panel:"r-result"},
+            onGetBusListComplete: function(result){
+                if(result) {
+                    var fstLine = result.getBusListItem(0);//获取第一个公交列表显示到map上
+                    busline.getBusLine(fstLine);
+                }
+            }
+        });
+        function busSearch(){
+            var busName = '23号线';
+            busline.getBusList(busName);
+        }
+        setTimeout(function(){
+            busSearch();
+        },1500);
 
         </script>
     </body>
