@@ -259,6 +259,7 @@
 		addsebtn(map,0,160,"超市");
 		addsebtn(map,0,200,"公园");
 		addsebtn(map,0,240,"地铁");
+		addsebtn(map,0,280,"公交");
 		addsebtn(map,210,0,"清除");
 		
 		// 添加交通流量按钮
@@ -270,7 +271,7 @@
 		tControl.prototype = new BMapGL.Control();
 		tControl.prototype.initialize = function(map) {
 		    var div = document.createElement('div');
-		    div.appendChild(document.createTextNode("交通"));
+		    div.appendChild(document.createTextNode("路况"));
 		    div.style.cursor = "pointer";
 		    div.style.padding = "7px 10px";
 		    div.style.boxShadow = "0 2px 6px 0 rgba(27, 142, 236, 0.5)";
